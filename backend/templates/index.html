@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crime Prediction Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Crime Prediction Dashboard</h1>
+
+    <h2>Predict Crime Risk</h2>
+    <form id="predict-form">
+        <input type="text" name="location" placeholder="Location" required>
+        <input type="text" name="time" placeholder="Time Period" required>
+        <input type="text" name="day" placeholder="Day of Week" required>
+        <input type="text" name="season" placeholder="Season" required>
+        <button type="submit">Predict</button>
+    </form>
+
+    <h3>Prediction Result:</h3>
+    <pre id="prediction-result"></pre>
+
+    <h2>Quick Links</h2>
+    <ul>
+        <li><a href="#" onclick="fetchTrends()">View Trends</a></li>
+        <li><a href="#" onclick="fetchHotspots()">View Hotspots</a></li>
+        <li><a href="#" onclick="fetchStatistics()">View Statistics</a></li>
+        <li><a href="#" onclick="fetchHistory()">View Prediction History</a></li>
+    </ul>
+
+    <pre id="api-result"></pre>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -187,6 +187,16 @@ def load_models():
     except FileNotFoundError:
         print("Models not found. Training new models...")
         return train_models()
+    
+def safe_transform(encoder, value, default=0):
+    """
+    Safely transform a categorical value using LabelEncoder.
+    If the value was not seen during training, return default.
+    """
+    try:
+        return encoder.transform([value])[0]
+    except ValueError:
+        return default
 
 # Initialize models
 risk_model, crime_model, le_location, le_time, le_day, le_season, le_crime = load_models()
@@ -208,7 +218,9 @@ class CrimePredictionAPI:
             season_encoded = le_season.transform([season])[0]
             
             # Predict risk level
-            X_risk = np.array([[location_encoded, time_encoded, day_encoded, season_encoded]])
+            # Add dummy 5th feature for risk_model
+            dummy_feature = 0
+            X_risk = np.array([[location_encoded, time_encoded, day_encoded, season_encoded, dummy_feature]])
             risk_prediction = risk_model.predict(X_risk)[0]
             risk_probabilities = risk_model.predict_proba(X_risk)[0]
             
